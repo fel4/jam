@@ -15,7 +15,7 @@ else 		{ LOCATE_TARGET ?= bin.$(OSFULL[1]:L) ; }
 # hard: with ""'s, it always gets the bootstrap version; with <>'s,
 # it won't find the bootstrap version.
 
-# SEARCH_SOURCE ?= $(LOCATE_TARGET) $(DOT) ;
+SEARCH_SOURCE ?= $(LOCATE_TARGET) $(DOT) src ;
 # LOCATE_SOURCE ?= $(LOCATE_TARGET) ;
 
 #
@@ -45,6 +45,8 @@ if $(DEBUG)
 	LINKFLAGS += -g ;
 	LOCATE_TARGET = $(LOCATE_TARGET)/g ;
 }
+
+CCFLAGS += [ FIncludes include ] ;
 
 # We have to signal jam.h for these
 

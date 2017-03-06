@@ -1,11 +1,14 @@
 # Makefile for jam
 
+INCLUDE_DIR = include
+SRC_DIR = src
+
 !IF "$(PLATFORM)" == "X64"
 
 # X64 NET 2005/2008/2010, settings already in environment.
 # Turn off new CRT depreciation garb.
 CC = cl /nologo
-CFLAGS = /favor:blend /MT -D_M_AMD64 -DNT -D_CRT_SECURE_NO_DEPRECATE /wd4996 /Zi
+CFLAGS = /favor:blend /MT -D_M_AMD64 -DNT -D_CRT_SECURE_NO_DEPRECATE /wd4996 /Zi /I$(INCLUDE_DIR)
 TARGET = /Fejam0
 LINKLIBS = oldnames.lib kernel32.lib libcmt.lib
 EXENAME = .\jam0.exe
@@ -15,7 +18,7 @@ EXENAME = .\jam0.exe
 # X86 NET 2005/2008/2010, settings already in environment.
 # Turn off new CRT depreciation garb.
 CC = cl /nologo
-CFLAGS = /MT -DNT -D_CRT_SECURE_NO_DEPRECATE /wd4996
+CFLAGS = /MT -DNT -D_CRT_SECURE_NO_DEPRECATE /wd4996 /I$(INCLUDE_DIR)
 TARGET = /Fejam0
 LINKLIBS = oldnames.lib kernel32.lib libcmt.lib
 EXENAME = .\jam0.exe
@@ -31,6 +34,9 @@ SOURCES = \
 	rules.c scan.c search.c timestamp.c variable.c
 
 OBJS = $(SOURCES:.c=.obj)
+
+{$(SRC_DIR)\}.c{}.obj::
+	$(CC) $(CFLAGS) $<
 
 all: $(EXENAME)
 	$(EXENAME)
