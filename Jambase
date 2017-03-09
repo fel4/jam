@@ -172,6 +172,7 @@ if $(NT)
 	RM			?= del /f/q ;
 	RMDIR		?= rmdir /s/q ;
 	SLASH		?= \\ ;
+	SUFDLL      ?= .dll ;
 	SUFLIB		?= .lib ;
 	SUFOBJ		?= .obj ;
 	SUFEXE		?= .exe ;
@@ -462,6 +463,7 @@ else if $(UNIX)
 	case MACOSX :
 	C++			?= c++ ;
 	MANDIR		?= /usr/local/share/man ;
+	SUFDLL      ?= .dylib ;
 
 	case DARWIN :
 	C++			?= g++ ;
@@ -469,6 +471,7 @@ else if $(UNIX)
 	CCFLAGS		+= -D__DARWIN__ ;
 	C++FLAGS		+= -D__DARWIN__ ;
 	MANDIR		?= /usr/local/share/man ;
+	SUFDLL      ?= .dylib ;
 
 	case NCR :
 	RANLIB		?= "" ;
@@ -571,6 +574,7 @@ else if $(UNIX)
 	STDHDRS		?= ;
 	SUBDIRRULES ?= ;
 	SUBDIRRESET ?= ASFLAGS HDRS C++FLAGS CCFLAGS ;
+	SUFDLL      ?= .so ;
 	SUFEXE		?= "" ;
 	SUFLIB		?= .a ;
 	SUFOBJ		?= .o ;
