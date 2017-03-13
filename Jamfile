@@ -18,6 +18,15 @@ else 		{ LOCATE_TARGET ?= bin.$(OSFULL[1]:L) ; }
 SEARCH_SOURCE ?= $(LOCATE_TARGET) $(DOT) src ;
 # LOCATE_SOURCE ?= $(LOCATE_TARGET) ;
 
+# path to the libuv directory.
+UV_ROOT ?= [ FDirName $(DOTDOT) $(DOTDOT) external libuv ] ;
+UV = [ FAppendSuffix libuv : $(SUFLIB) ] ;
+
+UV_DEBUG = [ FDirName $(UV_ROOT) Debug lib ] ;
+UV_RELEASE = [ FDirName $(UV_ROOT) Release lib ] ;
+
+SEARCH on $(UV) = $(UV_RELEASE) ;
+
 #
 # We have some different files for UNIX, VMS, and NT.
 #
@@ -44,9 +53,12 @@ if $(DEBUG)
 	CCFLAGS += -g ;
 	LINKFLAGS += -g ;
 	LOCATE_TARGET = $(LOCATE_TARGET)/g ;
+
+	SEARCH on $(UV) = $(UV_DEBUG) ;
 }
 
 CCFLAGS += [ FIncludes include ] ;
+CCFLAGS += [ FIncludes [ FDirName $(UV_ROOT) include ] ] ;
 
 # We have to signal jam.h for these
 
@@ -90,7 +102,7 @@ if $(VMS)
 #
 
 Main 		jam : jam.c jambase.c ;
-LinkLibraries 	jam : libjam.a ;
+LinkLibraries 	jam : libjam.a $(UV) ;
 GenFile 	jambase.c : mkjambase Jambase ;
 
 Library         libjam.a :
