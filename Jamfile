@@ -22,8 +22,15 @@ SEARCH_SOURCE ?= $(LOCATE_TARGET) $(DOT) src ;
 UV_ROOT ?= [ FDirName $(DOTDOT) $(DOTDOT) external libuv ] ;
 UV = [ FAppendSuffix libuv : $(SUFLIB) ] ;
 
-UV_DEBUG = [ FDirName $(UV_ROOT) Debug lib ] ;
-UV_RELEASE = [ FDirName $(UV_ROOT) Release lib ] ;
+switch $(OS)
+{
+	case NT :
+		UV_DEBUG = [ FDirName $(UV_ROOT) Debug lib ] ;
+		UV_RELEASE = [ FDirName $(UV_ROOT) Release lib ] ;
+	case * :
+		UV_DEBUG = [ FDirName $(UV_ROOT) build Debug ] ;
+		UV_RELEASE = [ FDirName $(UV_ROOT) build Release ] ;
+}
 
 SEARCH on $(UV) = $(UV_RELEASE) ;
 
