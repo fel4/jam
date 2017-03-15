@@ -79,6 +79,13 @@ extern "C" {
 
 JAM_API unsigned int jam_get_version();
 
+typedef enum {
+    JAM_RESULT_OK,
+    JAM_RESULT_NOENT,
+    JAM_RESULT_NOMEM,
+    JAM_RESULT_BADARG
+} jam_result_t;
+
 /* Custom Allocation Setup */
 typedef struct jam_allocator_s {
     void *(*malloc)(struct jam_allocator_s*, size_t);
