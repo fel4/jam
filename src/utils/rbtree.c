@@ -29,7 +29,7 @@ static void rbtree_node_cleanup(jam_allocator_t* alloc, jam_rbtree_node_t* node)
 static jam_rbtree_node_t* rbtree_node_grandparent(jam_rbtree_node_t* node);
 static jam_rbtree_node_t* rbtree_node_uncle(jam_rbtree_node_t* node);
 static jam_rbtree_node_t* rbtree_node_sibling(jam_rbtree_node_t* node);
-static jam_rbtree_node_t* rbtree_node_find(jam_rbtree_node_t* node, uint32_t key);
+static jam_rbtree_node_t* rbtree_node_find(jam_rbtree_node_t* node, uintptr_t key);
 
 static void node_insert(jam_rbtree_node_t* in_tree, jam_rbtree_node_t* node);
 static void node_insert_case1(jam_rbtree_node_t* node);
@@ -208,7 +208,7 @@ jam_result_t jam_rbtree_remove(jam_rbtree_t* tree, jam_rbtree_item_t item)
     return JAM_RESULT_OK;
 }
 
-jam_result_t jam_rbtree_size(jam_rbtree_t* tree, uint32_t* size)
+jam_result_t jam_rbtree_size(jam_rbtree_t* tree, uintptr_t* size)
 {
     if (tree == NULL) return JAM_RESULT_BADARG;
     if (length == NULL) return JAM_RESULT_BADARG;
@@ -224,7 +224,7 @@ jam_result_t jam_rbtree_enumerate(const jam_rbtree_t* tree, jam_rbtree_iterator_
     return JAM_RESULT_OK;
 }
 
-jam_result_t jam_rbtree_find(jam_rbtree_t* tree, uint32_t key, void** data)
+jam_result_t jam_rbtree_find(jam_rbtree_t* tree, uintptr_t key, void** data)
 {
     if (tree == NULL) return JAM_RESULT_BADARG;
     jam_rbtree_node_t* node = rbtree_node_find(tree->root, key);
