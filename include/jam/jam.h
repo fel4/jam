@@ -60,7 +60,7 @@
 #           define JAM_API
 #       endif
 #   else
-#       if __GNUC__ >= 4
+#       if __GNUC__ >= 4 || defined(__clang__)
 #           define JAM_API __attribute__((visibility("default")))
 #       else
 #           define JAM_API
@@ -86,15 +86,16 @@ BEGIN_C_EXTERN
 
 JAM_API unsigned int jam_get_version();
 
-typedef enum {
+JAM_API typedef enum {
     JAM_RESULT_OK,
     JAM_RESULT_NOENT,
     JAM_RESULT_NOMEM,
-    JAM_RESULT_BADARG
+    JAM_RESULT_BADARG,
+    JAM_RESULT_EXISTS,
 } jam_result_t;
 
 /* Custom Allocation Setup */
-typedef struct jam_allocator_s {
+JAM_API typedef struct jam_allocator_s {
     void *(*malloc)(struct jam_allocator_s*, size_t);
     void *(*realloc)(struct jam_allocator_s*, void*, size_t);
     void (*free)(struct jam_allocator_s*, void*);
