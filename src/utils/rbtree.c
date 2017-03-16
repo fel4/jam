@@ -16,7 +16,7 @@ struct jam_rbtree_node_s {
     color_t color; 
 }
 
-typedef struct jam_rbtree_s {
+struct jam_rbtree_s {
     jam_allocator_t* allocator;
     jam_rbtree_node_t root;
 };
@@ -117,8 +117,7 @@ static jam_rbtree_node_t* rbtree_node_find(jam_rbtree_node_t* node, uint32_t key
     jam_rbtree_node_t* ret = NULL;
     if (node == NULL) { return NULL; }
     if (node->item->key == key) { return node; }
-    ret = rbtree_node_find(node->left, key);
-    return (ret != NULL) ? ret : rbtree_node_find(node->right, key);
+    return (node->item->key > key) ? rbtree_node_find(node->left, key) : rbtree_node_find(node->right, key);
 }
 
 static void node_insert(jam_rbtree_node_t* in_tree, jam_rbtree_node_t* node)
@@ -222,10 +221,28 @@ jam_result_t jam_rbtree_remove(jam_rbtree_t* tree, jam_rbtree_item_t item)
     return JAM_RESULT_OK;
 }
 
-void jam_rbtree_enumerate(const jam_rbtree_t* tree, jam_rbtree_iterator_func cb, void* data)
+jam_result_t jam_rbtree_size(jam_rbtree_t* tree, uint32_t* size)
+{
+    if (tree == NULL) return JAM_RESULT_BADARG;
+    if (length == NULL) return JAM_RESULT_BADARG;
+    if (tree->root == NULL) { *size = 0; return JAM_RESULT_OK; }
+    // TODO :: finsh.
+}
+
+jam_result_t jam_rbtree_enumerate(const jam_rbtree_t* tree, jam_rbtree_iterator_func cb, void* data)
 {
     if (tree == NULL) return JAM_RESULT_BADARG;
     if (cb == NULL) return JAM_RESULT_BADARG;
     rbtree_node_visit(tree->root, cb, data);
+    return JAM_RESULT_OK;
+}
+
+jam_result_t jam_rbtree_find(jam_rbtree_t* tree, uint32_t key, void** data)
+{
+    if (tree == NULL) return JAM_RESULT_BADARG;
+    jam_rbtree_node_t* node = rbtree_node_find(tree->root, key);
+    if (node == NULL) return JAM_RESULT_NOENT;
+    *data = node->item->data;
+    return JAM_RESULT_OK;
 }
 /* end public api */
