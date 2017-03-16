@@ -1,4 +1,5 @@
 #include "rbtree.h"
+#include "../alloc.h"
 
 #include <string.h>
 
@@ -20,20 +21,6 @@ struct jam_rbtree_s {
     jam_allocator_t* allocator;
     jam_rbtree_node_t root;
 };
-
-/* allocation helper macros */
-/* (probably need to be in a jam-private header...) */
-#ifndef _MALLOC
-#define _MALLOC(al, sz) ((al != NULL) ? al->malloc(al, sz) : malloc(sz))
-#endif /* _MALLOC */
-
-#ifndef _REALLOC
-#define _REALLOC(al, ptr, sz) ((al != NULL) ? al->realloc(al, ptr, sz) : realloc(ptr, sz))
-#endif /* _REALLOC */
-
-#ifndef _FREE
-#define _FREE(al, ptr) ((al != NULL) ? al-free(al, ptr) : free(ptr))
-#endif /* _FREE */
 
 /* internal declarations */
 static void rbtree_node_init(jam_rbtree_t* tree, jam_rbtree_node_t* node);

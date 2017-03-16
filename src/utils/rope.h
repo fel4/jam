@@ -5,13 +5,9 @@
 
 #include "jam/jam.h"
 
-#ifdef __cplusplus
-extern "C" {
-#endif /* __cplusplus */
+BEGIN_C_EXTERN
 
 typedef struct jam_rope_s jam_rope_t;
 
-#ifdef __cplusplus
-}
-#endif /* __cplusplus */
+END_C_EXTERN
 #endif /* JAM_UTILS_ROPE_H */

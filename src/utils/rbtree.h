@@ -6,9 +6,7 @@
 #include "jam/jam.h"
 #include <stdint.h>
 
-#ifdef __cplusplus
-extern "C" {
-#endif /* __cplusplus */
+BEGIN_C_EXTERN
 
 typedef struct {
     uint32_t key;
@@ -27,7 +25,5 @@ jam_result_t jam_rbtree_size(jam_rbtree_t*, uint32_t* size);
 jam_result_t jam_rbtree_enumerate(jam_rbtree_t*, jam_rbtree_iterator_func, void*);
 jam_result_t jam_rbtree_find(jam_rbtree_t*, uint32_t, void**);
 
-#ifdef __cplusplus
-}
-#endif /* __cplusplus */
+END_C_EXTERN
 #endif /* JAM_UTILS_RBTREE_H */

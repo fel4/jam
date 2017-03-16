@@ -50,10 +50,6 @@
 #ifndef JAM_H
 #define JAM_H
 
-#ifdef __cplusplus
-extern "C" {
-#endif
-
 #ifndef JAM_API
 #   ifdef _WIN32
 #       if defined(JAM_BUILD_SHARED) /* build dll */
@@ -71,6 +67,17 @@ extern "C" {
 #       endif
 #   endif
 #endif
+
+#ifdef __cplusplus
+#   define BEGIN_C_EXTERN extern "C" {
+#   define END_C_EXTERN } 
+#else
+#   define BEGIN_C_EXTERN
+#   define END_C_EXTERN
+#endif
+
+BEGIN_C_EXTERN
+
 
 /* Version Info */
 #define JAM_VERSION_MAJOR 3
@@ -373,7 +380,5 @@ extern struct globs globs;
 # define DEBUG_DEPENDS	( globs.debug[ 13 ] )	/* -dd show dependency graph */
 # define DEBUG_CAUSES	( globs.debug[ 14 ] )	/* -dc show dependency graph */
 
-#ifdef __cplusplus
-}
-#endif /* __cplusplus */
+END_C_EXTERN
 #endif /* JAM_H */
